@@ -1,0 +1,275 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 180px;
+  height: 340px;
+  box-sizing: border-box;
+}
+
+.additional {
+  display: flex;
+  width: 100%;
+  height: 33px;
+  justify-content: center;
+  align-items: flex-start;
+}
+.additional > span {
+  height: 24px;
+  border-radius: 5px;
+  padding: 0 5px;
+  color: #1d1d1b;
+  text-align: center;
+  font-family: Visby;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  background-color: chartreuse;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: calc(100% - 33px);
+  padding: 3px;
+  border: 1px solid white;
+}
+
+.isActive {
+  border: 1px solid #42a5f5;
+  border-radius: 14px;
+  transition: border 1s ease-out;
+}
+
+.img {
+  position: relative;
+  width: 100%;
+  height: 162px;
+  min-height: 162px;
+  overflow: hidden;
+}
+.img > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.count {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: 12px;
+  right: 12px;
+  background: #fff;
+  border-radius: 5px;
+  color: #1d1d1b;
+  text-align: center;
+  font-family: Visby;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  overflow: hidden;
+}
+.count > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.up > div {
+  animation-duration: 1s;
+  animation-name: up;
+  transform: translateY(0);
+}
+
+.down > div {
+  animation-duration: 1s;
+  animation-name: down;
+  transform: translateY(-24px);
+}
+
+@keyframes up {
+  from {
+    transform: translateY(-24px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes down {
+  from {
+    transform: translateY(0px);
+  }
+
+  to {
+    transform: translateY(-24px);
+  }
+}
+
+.type {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  min-width: 80px;
+  min-height: 18px;
+  right: 12px;
+  bottom: 7px;
+  color: #fff;
+  text-align: right;
+  font-family: Visby;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.name {
+  display: flex;
+  width: 158px;
+  height: 50px;
+  min-height: 50px;
+  justify-content: center;
+  align-items: center;
+  color: #1d1d1b;
+  text-align: center;
+  font-family: Visby;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.price {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.desc {
+  display: flex;
+  width: 104px;
+  height: 24px;
+  min-height: 24px;
+  justify-content: center;
+  align-items: center;
+  color: #1d1d1b;
+  font-family: Visby;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.value {
+  display: flex;
+  width: 52px;
+  height: 24px;
+  min-height: 24px;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  color: #1d1d1b;
+}
+
+.priceControl {
+  display: flex;
+  justify-content: space-around;
+  width: 158px;
+  height: 24px;
+  min-height: 24px;
+  border-radius: 5px;
+  border: 1px solid #42a5f5;
+  background: rgba(255, 255, 255, 0);
+  transition: display 1s;
+}
+
+.priceBtn {
+  display: flex;
+  background: transparent;
+  width: 45px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  color: #1d1d1b;
+  text-align: center;
+  font-family: Visby;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding-bottom: 8px;
+}
+
+.priceBtn:disabled {
+  color: #d9d9d9;
+}
+
+.priceResult {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: lowercase;
+  width: 68px;
+  height: 24px;
+  color: #1d1d1b;
+  text-align: center;
+  font-family: Visby;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding-bottom: 4px;
+}
+.priceResult > span {
+  margin-left: 5px;
+  font-size: 12px;
+  padding-top: 5px;
+}
+
+.canAdd {
+  display: flex;
+  width: 158px;
+  height: 20px;
+  min-height: 20px;
+  flex-direction: column;
+  justify-content: center;
+  color: #909ca2;
+  text-align: center;
+  font-family: Visby;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.duo {
+  display: flex;
+  width: 158px;
+  height: 30px;
+  min-height: 30px;
+  justify-content: center;
+  color: #42a5f5;
+  align-items: center;
+  font-family: Visby;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-decoration-line: underline;
+  background: transparent;
+}
+
+.dnone {
+  display: none;
+}

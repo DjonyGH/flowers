@@ -1,0 +1,8 @@
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Visby";
+  font-style: normal;
+  font-weight: 500;
+  src: url("../fonts/VisbyCF-Medium.woff2") format("woff2"),
+    url("../fonts/VisbyCF-Medium.woff") format("woff");
+}

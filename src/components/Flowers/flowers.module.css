@@ -1,0 +1,21 @@
+.wrapperFlowers {
+  display: flex;
+  flex-direction: column;
+}
+.title {
+  color: #1d1d1b;
+  font-family: Visby;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.body {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  gap: 10px;
+}
