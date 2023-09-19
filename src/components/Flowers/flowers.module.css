@@ -9,13 +9,14 @@
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  margin-bottom: 10px;
 }
 
 .body {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: nowrap;
   overflow: hidden;
-  gap: 10px;
+  gap: 3px;
 }

@@ -17,13 +17,14 @@ export const Slider: React.FC<ISliderProps> = ({ children }) => {
     tnsRef.current = tns({
       container: refSlider.current,
       items: 1,
-      slideBy: 2,
+      slideBy: 1,
       autoplay: false,
       controls: false,
       nav: false,
       autoWidth: true,
       loop: false,
-      gutter: 10,
+      // gutter: 10,
+      swipeAngle: 30,
     })
 
     return () => {

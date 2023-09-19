@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import styles from './flowers.module.css'
-import { Slider } from '../Slider'
 import { FlowerCard } from '../FlowerCard'
 import { flowers } from './../../mocks/flowers'
 import { FlowerCardDuo } from '../FlowerCardDuo'
 import { EOrderMode, ESign, IFlower, IOrder } from '../../types'
+import { SwiperSlider } from '../SwiperSlider'
 
 export const Flowers: React.FC = () => {
   const [order, setOrder] = useState<IOrder | null>(null)
@@ -63,7 +63,11 @@ export const Flowers: React.FC = () => {
 
   const handleInactivateDuo = () => {
     if (!order) return
-    setOrder(null)
+    setOrder({
+      ...order,
+      mode: EOrderMode.Mono,
+      flower2: undefined,
+    })
   }
 
   const handleReplace = () => {
@@ -100,22 +104,21 @@ export const Flowers: React.FC = () => {
           />
         )}
 
-        {!order?.flower2 && (
-          <Slider>
-            {getFlowers(order).map((item) => (
-              <FlowerCard
-                flower={item}
-                isActive={order?.mode === EOrderMode.Mono && item.id === order.flower1.id}
-                onClick={() => handleClick(item.id)}
-                key={item.id}
-                orderCount={order?.flower1.count || 0}
-                onChangePrice={handleChangePriceFlower1}
-                onSelectDuo={handleSelectDuo}
-              />
-            ))}
-            {order?.flower1 && <div style={{ width: '180px' }} />}
-          </Slider>
-        )}
+        {/* {!order?.flower2 && ( */}
+        <SwiperSlider isHalf={!!order?.flower1 && order.mode === EOrderMode.Duo} hidden={!!order?.flower2}>
+          {getFlowers(order).map((item) => (
+            <FlowerCard
+              flower={item}
+              isActive={order?.mode === EOrderMode.Mono && item.id === order.flower1.id}
+              onClick={() => handleClick(item.id)}
+              key={item.id}
+              orderCount={order?.flower1.count || 0}
+              onChangePrice={handleChangePriceFlower1}
+              onSelectDuo={handleSelectDuo}
+            />
+          ))}
+        </SwiperSlider>
+        {/* )} */}
       </div>
     </div>
   )
