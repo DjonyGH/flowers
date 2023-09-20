@@ -1,4 +1,4 @@
-import React, { ReactNode, useLayoutEffect, useRef, useState } from 'react'
+import React, { ReactNode, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import styles from './swiperSlider.module.css'
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
@@ -8,19 +8,36 @@ interface ISliderProps {
   isHalf?: boolean
   hidden?: boolean
   refSwiper: React.MutableRefObject<SwiperRef | null>
-  index?: number
+  indexFlower1?: number
+  indexFlower2?: number
 }
 
-export const SwiperSlider: React.FC<ISliderProps> = ({ children, isHalf, hidden, refSwiper, index = 0 }) => {
+export const SwiperSlider: React.FC<ISliderProps> = ({
+  children,
+  isHalf,
+  hidden,
+  refSwiper,
+  indexFlower1 = 0,
+  indexFlower2,
+}) => {
   const refWrapperSlider = useRef<HTMLDivElement | null>(null)
   const [width, setWidth] = useState<number>(0)
 
   useLayoutEffect(() => {
     setWidth(refWrapperSlider.current?.clientWidth || 0)
     setTimeout(function () {
-      refSwiper.current?.swiper.slideTo(index)
+      refSwiper.current?.swiper.slideTo(indexFlower1)
     }, 0)
-  }, [hidden]) //eslint-disable-line
+  }, []) //eslint-disable-line
+
+  useEffect(() => {
+    console.log('indexFlower1', indexFlower1)
+    console.log('indexFlower2', indexFlower2)
+    setTimeout(function () {
+      !isHalf && refSwiper.current?.swiper.slideTo(indexFlower1)
+      isHalf && indexFlower2 && refSwiper.current?.swiper.slideTo(indexFlower2)
+    }, 0)
+  }, [isHalf, indexFlower1, indexFlower2]) //eslint-disable-line
 
   return (
     <div className={`${styles.wrapperSlider} ${hidden && styles.dnone}`} ref={refWrapperSlider}>
@@ -33,6 +50,7 @@ export const SwiperSlider: React.FC<ISliderProps> = ({ children, isHalf, hidden,
           }
         }}
         ref={refSwiper}
+        init={false}
       >
         {React.Children.toArray(children).map((item, idx) => (
           <SwiperSlide tabIndex={idx} key={idx}>

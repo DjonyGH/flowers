@@ -9,7 +9,7 @@ interface IFlowerCardProps {
   isActive: boolean
   isDuo: boolean
   orderCount: number
-  onClick: () => void
+  onClick: (index?: number) => void
   onChangePrice: (sign: ESign) => void
   onSelectDuo: (index: number) => void
 }
@@ -29,7 +29,13 @@ export const FlowerCard: React.FC<IFlowerCardProps> = ({
     <div className={styles.card} ref={refCard}>
       <div className={styles.additional}>{flower.additional && <span>{flower.additional}</span>}</div>
       <div className={`${styles.body} ${isActive && styles.isActive}`}>
-        <div className={styles.img} onClick={onClick}>
+        <div
+          className={styles.img}
+          onClick={() => {
+            const index = refCard.current?.parentElement?.getAttribute('tabindex')
+            onClick(index ? +index : undefined)
+          }}
+        >
           <img src={flower.imgUrl} alt={flower.name} />
           {(isActive || isDuo) && (
             <div className={styles.count}>

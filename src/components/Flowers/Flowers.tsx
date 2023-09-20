@@ -14,13 +14,15 @@ export const Flowers: React.FC = () => {
     mode: EOrderMode.Mono,
     flower1: { id: flowers[0].id, count: flowers[0].count },
   })
-  const [indexDuoElement, setIndexDuoElement] = useState<number>()
+  const [indexFlower1El, setIndexFlower1El] = useState<number>()
+  const [indexFlower2El, setIndexFlower2El] = useState<number>()
   const refSwiper = useRef<SwiperRef | null>(null)
 
-  const handleClick = (id: string, count: number) => {
+  const handleClick = (id: string, count: number, index?: number) => {
     if (order?.mode === EOrderMode.Duo && order.flower2) return
 
     if (order?.mode === EOrderMode.Duo) {
+      index && setIndexFlower2El(index)
       setOrder({ ...order, flower2: { id, count } })
     } else {
       setOrder({ mode: EOrderMode.Mono, flower1: { id, count } })
@@ -54,7 +56,7 @@ export const Flowers: React.FC = () => {
   }
 
   const handleSelectDuo = async (index: number) => {
-    setIndexDuoElement(index)
+    setIndexFlower1El(index)
     refSwiper.current?.swiper.slideTo(index)
     await pause(300)
     if (!order) return
@@ -65,6 +67,7 @@ export const Flowers: React.FC = () => {
   }
 
   const handleInactivateDuo = async () => {
+    setIndexFlower2El(undefined)
     if (!order) return
     setOrder({
       ...order,
@@ -73,7 +76,9 @@ export const Flowers: React.FC = () => {
     })
   }
 
-  const handleReplace = () => {
+  const handleReplace = async () => {
+    setIndexFlower2El(indexFlower2El)
+    await pause(300)
     if (!order) return
     setOrder({
       ...order,
@@ -111,14 +116,15 @@ export const Flowers: React.FC = () => {
           refSwiper={refSwiper}
           isHalf={!!order?.flower1 && order.mode === EOrderMode.Duo}
           hidden={!!order?.flower2}
-          index={indexDuoElement}
+          indexFlower1={indexFlower1El}
+          indexFlower2={indexFlower2El}
         >
           {getFlowers(order).map((item) => (
             <FlowerCard
               flower={item}
               isActive={order?.mode === EOrderMode.Mono && item.id === order.flower1.id}
               isDuo={order?.mode === EOrderMode.Duo}
-              onClick={() => handleClick(item.id, item.count)}
+              onClick={(index) => handleClick(item.id, item.count, index)}
               key={item.id}
               orderCount={order?.flower1.count || 0}
               onChangePrice={handleChangePriceFlower1}
