@@ -9,13 +9,13 @@ import { SwiperSlider } from '../SwiperSlider'
 export const Flowers: React.FC = () => {
   const [order, setOrder] = useState<IOrder | null>(null)
 
-  const handleClick = (id: string) => {
+  const handleClick = (id: string, count: number) => {
     if (order?.mode === EOrderMode.Duo && order.flower2) return
 
     if (order?.mode === EOrderMode.Duo) {
-      setOrder({ ...order, flower2: { id, count: 1 } })
+      setOrder({ ...order, flower2: { id, count } })
     } else {
-      setOrder({ mode: EOrderMode.Mono, flower1: { id, count: 1 } })
+      setOrder({ mode: EOrderMode.Mono, flower1: { id, count } })
     }
   }
 
@@ -23,10 +23,6 @@ export const Flowers: React.FC = () => {
     if (!order) return
 
     if (sign === ESign.Minus && order.flower1.count <= 1) return
-
-    const selectedFlower = flowers.find((item) => item.id === order.flower1.id)
-
-    if (sign === ESign.Plus && selectedFlower && selectedFlower.count <= order.flower1.count) return
 
     const flower1Count = sign === ESign.Plus ? ++order.flower1.count : --order.flower1.count
 
@@ -40,10 +36,6 @@ export const Flowers: React.FC = () => {
     if (!order || !order.flower2) return
 
     if (sign === ESign.Minus && order.flower2.count <= 1) return
-
-    const selectedFlower = flowers.find((item) => item.id === order.flower2!.id)
-
-    if (sign === ESign.Plus && selectedFlower && selectedFlower.count <= order.flower2.count) return
 
     const flower2Count = sign === ESign.Plus ? ++order.flower2.count : --order.flower2.count
 
@@ -104,13 +96,13 @@ export const Flowers: React.FC = () => {
           />
         )}
 
-        {/* {!order?.flower2 && ( */}
         <SwiperSlider isHalf={!!order?.flower1 && order.mode === EOrderMode.Duo} hidden={!!order?.flower2}>
           {getFlowers(order).map((item) => (
             <FlowerCard
               flower={item}
               isActive={order?.mode === EOrderMode.Mono && item.id === order.flower1.id}
-              onClick={() => handleClick(item.id)}
+              isDuo={order?.mode === EOrderMode.Duo}
+              onClick={() => handleClick(item.id, item.count)}
               key={item.id}
               orderCount={order?.flower1.count || 0}
               onChangePrice={handleChangePriceFlower1}
@@ -118,7 +110,6 @@ export const Flowers: React.FC = () => {
             />
           ))}
         </SwiperSlider>
-        {/* )} */}
       </div>
     </div>
   )

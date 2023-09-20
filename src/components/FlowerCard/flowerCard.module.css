@@ -64,55 +64,6 @@
   height: 24px;
   top: 12px;
   right: 12px;
-  background: #fff;
-  border-radius: 5px;
-  color: #1d1d1b;
-  text-align: center;
-  font-family: Visby;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  overflow: hidden;
-}
-.count > div {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
-
-.up > div {
-  animation-duration: 1s;
-  animation-name: up;
-  transform: translateY(0);
-}
-
-.down > div {
-  animation-duration: 1s;
-  animation-name: down;
-  transform: translateY(-24px);
-}
-
-@keyframes up {
-  from {
-    transform: translateY(-24px);
-  }
-
-  to {
-    transform: translateY(0);
-  }
-}
-
-@keyframes down {
-  from {
-    transform: translateY(0px);
-  }
-
-  to {
-    transform: translateY(-24px);
-  }
 }
 
 .type {
@@ -180,62 +131,6 @@
   font-weight: 500;
   line-height: normal;
   color: #1d1d1b;
-}
-
-.priceControl {
-  display: flex;
-  justify-content: space-around;
-  width: 158px;
-  height: 24px;
-  min-height: 24px;
-  border-radius: 5px;
-  border: 1px solid #42a5f5;
-  background: rgba(255, 255, 255, 0);
-  transition: display 1s;
-}
-
-.priceBtn {
-  display: flex;
-  background: transparent;
-  width: 45px;
-  height: 24px;
-  align-items: center;
-  justify-content: center;
-  color: #1d1d1b;
-  text-align: center;
-  font-family: Visby;
-  font-size: 28px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  padding-bottom: 8px;
-  cursor: default;
-}
-
-.priceBtn:disabled {
-  color: #d9d9d9;
-}
-
-.priceResult {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-transform: lowercase;
-  width: 68px;
-  height: 24px;
-  color: #1d1d1b;
-  text-align: center;
-  font-family: Visby;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  padding-bottom: 4px;
-}
-.priceResult > span {
-  margin-left: 5px;
-  font-size: 12px;
-  padding-top: 5px;
 }
 
 .canAdd {

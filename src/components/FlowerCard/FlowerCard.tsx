@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import styles from './flowerCard.module.css'
 import { ESign, IFlower } from '../../types'
+import { Counter } from '../Counter'
+import { PriceControl } from '../PriceControl'
 
 interface IFlowerCardProps {
   flower: IFlower
   isActive: boolean
+  isDuo: boolean
   orderCount: number
   onClick: () => void
   onChangePrice: (sign: ESign) => void
@@ -14,6 +17,7 @@ interface IFlowerCardProps {
 export const FlowerCard: React.FC<IFlowerCardProps> = ({
   flower,
   isActive,
+  isDuo,
   orderCount,
   onClick,
   onChangePrice,
@@ -26,14 +30,9 @@ export const FlowerCard: React.FC<IFlowerCardProps> = ({
       <div className={`${styles.body} ${isActive && styles.isActive}`}>
         <div className={styles.img} onClick={onClick}>
           <img src={flower.imgUrl} alt={flower.name} />
-          {isActive && (
-            <div
-              className={`${styles.count} ${vector === 'up' && styles.up} ${vector === 'down' && styles.down}`}
-              key={orderCount}
-            >
-              {vector === 'down' && <div>{orderCount + 1}</div>}
-              <div>{orderCount}</div>
-              {vector === 'up' && <div>{orderCount - 1}</div>}
+          {(isActive || isDuo) && (
+            <div className={styles.count}>
+              <Counter count={isActive ? orderCount : flower.count} vector={vector} key={orderCount} />
             </div>
           )}
           {flower.type && <div className={styles.type}>{flower.type}</div>}
@@ -46,31 +45,18 @@ export const FlowerCard: React.FC<IFlowerCardProps> = ({
           </div>
         ) : (
           <>
-            <div className={`${styles.priceControl} ${!isActive && styles.dnone}`}>
-              <button
-                className={styles.priceBtn}
-                onClick={() => {
-                  onChangePrice(ESign.Minus)
-                  setVector('down')
-                }}
-                disabled={orderCount <= 1}
-              >
-                -
-              </button>
-              <div className={styles.priceResult}>
-                {flower.price} <span>₽/шт</span>
-              </div>
-              <button
-                className={styles.priceBtn}
-                onClick={() => {
-                  onChangePrice(ESign.Plus)
-                  setVector('up')
-                }}
-                disabled={orderCount >= flower.count}
-              >
-                +
-              </button>
-            </div>
+            <PriceControl
+              price={flower.price}
+              minusDisabled={orderCount <= 1}
+              onMinusClick={() => {
+                onChangePrice(ESign.Minus)
+                setVector('down')
+              }}
+              onPlusClick={() => {
+                onChangePrice(ESign.Plus)
+                setVector('up')
+              }}
+            />
             <div className={styles.canAdd}>можно дополнить</div>
             <button className={styles.duo} onClick={onSelectDuo}>
               сделать DUO

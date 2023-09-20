@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './flowerCardDuo.module.css'
 import { ESign, IFlower } from '../../types'
+import { Counter } from '../Counter'
+import { PriceControl } from '../PriceControl'
 
 interface IFlowerCardDuoProps {
   flower1: IFlower
@@ -23,6 +25,8 @@ export const FlowerCardDuo: React.FC<IFlowerCardDuoProps> = ({
   onInactivateDuo,
   onReplace,
 }) => {
+  const [vector1, setVector1] = useState<'up' | 'down'>()
+  const [vector2, setVector2] = useState<'up' | 'down'>()
   return (
     <div className={styles.cardDuo}>
       <div className={styles.card}>
@@ -30,7 +34,11 @@ export const FlowerCardDuo: React.FC<IFlowerCardDuoProps> = ({
         <div className={`${styles.body} ${styles.leftSide} ${styles.divider}`}>
           <div className={styles.img}>
             <img src={flower1.imgUrl} alt={flower1.name} />
-            <div className={styles.count}>{flower1.count}</div>
+
+            <div className={styles.count}>
+              <Counter count={orderCountFlower1} vector={vector1} key={orderCountFlower1} />
+            </div>
+
             {flower1.type && <div className={styles.type}>{flower1.type}</div>}
           </div>
           <div className={styles.name}>{flower1.name}</div>
@@ -47,23 +55,19 @@ export const FlowerCardDuo: React.FC<IFlowerCardDuoProps> = ({
             </>
           ) : (
             <>
-              <div className={styles.priceControl}>
-                <button
-                  className={styles.priceBtn}
-                  onClick={() => onChangePriceFlower1(ESign.Minus)}
-                  disabled={orderCountFlower1 <= 1}
-                >
-                  -
-                </button>
-                <div className={styles.priceResult}>{orderCountFlower1 * flower1.price} ₽</div>
-                <button
-                  className={styles.priceBtn}
-                  onClick={() => onChangePriceFlower1(ESign.Plus)}
-                  disabled={orderCountFlower1 >= flower1.count}
-                >
-                  +
-                </button>
-              </div>
+              <PriceControl
+                price={flower1.price}
+                minusDisabled={orderCountFlower1 <= 1}
+                onMinusClick={() => {
+                  onChangePriceFlower1(ESign.Minus)
+                  setVector1('down')
+                }}
+                onPlusClick={() => {
+                  onChangePriceFlower1(ESign.Plus)
+                  setVector1('up')
+                }}
+              />
+
               <div className={styles.canAdd}>можно дополнить</div>
               <button className={styles.duo} onClick={onInactivateDuo}>
                 отменить DUO
@@ -79,28 +83,27 @@ export const FlowerCardDuo: React.FC<IFlowerCardDuoProps> = ({
           <div className={`${styles.body} ${styles.rightSide}`}>
             <div className={styles.img}>
               <img src={flower2.imgUrl} alt={flower2.name} />
-              <div className={styles.count}>{flower2.count}</div>
+
+              <div className={styles.count}>
+                <Counter count={orderCountFlower2} vector={vector2} key={orderCountFlower2} />
+              </div>
+
               {flower2.type && <div className={styles.type}>{flower2.type}</div>}
             </div>
             <div className={styles.name}>{flower2.name}</div>
 
-            <div className={styles.priceControl}>
-              <button
-                className={styles.priceBtn}
-                onClick={() => onChangePriceFlower2(ESign.Minus)}
-                disabled={orderCountFlower2 <= 1}
-              >
-                -
-              </button>
-              <div className={styles.priceResult}>{orderCountFlower2 * flower2.price} ₽</div>
-              <button
-                className={styles.priceBtn}
-                onClick={() => onChangePriceFlower2(ESign.Plus)}
-                disabled={orderCountFlower2 >= flower2.count}
-              >
-                +
-              </button>
-            </div>
+            <PriceControl
+              price={flower2.price}
+              minusDisabled={orderCountFlower2 <= 1}
+              onMinusClick={() => {
+                onChangePriceFlower2(ESign.Minus)
+                setVector2('down')
+              }}
+              onPlusClick={() => {
+                onChangePriceFlower2(ESign.Plus)
+                setVector2('up')
+              }}
+            />
             <div className={styles.canAdd}>можно дополнить</div>
             <button className={styles.duo} onClick={onReplace}>
               заменить

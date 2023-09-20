@@ -1,0 +1,53 @@
+.count {
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border-radius: 5px;
+  color: #1d1d1b;
+  text-align: center;
+  font-family: Visby;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  overflow: hidden;
+}
+.count > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.up > div {
+  animation-duration: 0.3s;
+  animation-name: up;
+  transform: translateY(0);
+}
+
+.down > div {
+  animation-duration: 0.3s;
+  animation-name: down;
+  transform: translateY(-24px);
+}
+
+@keyframes up {
+  from {
+    transform: translateY(-24px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes down {
+  from {
+    transform: translateY(0px);
+  }
+
+  to {
+    transform: translateY(-24px);
+  }
+}
