@@ -31,8 +31,6 @@ export const SwiperSlider: React.FC<ISliderProps> = ({
   }, []) //eslint-disable-line
 
   useEffect(() => {
-    console.log('indexFlower1', indexFlower1)
-    console.log('indexFlower2', indexFlower2)
     setTimeout(function () {
       !isHalf && refSwiper.current?.swiper.slideTo(indexFlower1)
       isHalf && indexFlower2 && refSwiper.current?.swiper.slideTo(indexFlower2)
