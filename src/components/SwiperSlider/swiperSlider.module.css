@@ -7,5 +7,5 @@
   width: 100%;
 }
 .dnone {
-  display: none;
+  visibility: hidden;
 }

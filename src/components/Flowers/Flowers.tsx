@@ -1,13 +1,21 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styles from './flowers.module.css'
 import { FlowerCard } from '../FlowerCard'
 import { flowers } from './../../mocks/flowers'
 import { FlowerCardDuo } from '../FlowerCardDuo'
 import { EOrderMode, ESign, IFlower, IOrder } from '../../types'
 import { SwiperSlider } from '../SwiperSlider'
+import { SwiperRef } from 'swiper/react'
+
+const pause = (ms: number) => new Promise((res) => setTimeout(res, ms))
 
 export const Flowers: React.FC = () => {
-  const [order, setOrder] = useState<IOrder | null>(null)
+  const [order, setOrder] = useState<IOrder>({
+    mode: EOrderMode.Mono,
+    flower1: { id: flowers[0].id, count: flowers[0].count },
+  })
+  const [indexDuoElement, setIndexDuoElement] = useState<number>()
+  const refSwiper = useRef<SwiperRef | null>(null)
 
   const handleClick = (id: string, count: number) => {
     if (order?.mode === EOrderMode.Duo && order.flower2) return
@@ -45,7 +53,10 @@ export const Flowers: React.FC = () => {
     })
   }
 
-  const handleSelectDuo = () => {
+  const handleSelectDuo = async (index: number) => {
+    setIndexDuoElement(index)
+    refSwiper.current?.swiper.slideTo(index)
+    await pause(300)
     if (!order) return
     setOrder({
       ...order,
@@ -53,7 +64,7 @@ export const Flowers: React.FC = () => {
     })
   }
 
-  const handleInactivateDuo = () => {
+  const handleInactivateDuo = async () => {
     if (!order) return
     setOrder({
       ...order,
@@ -96,7 +107,12 @@ export const Flowers: React.FC = () => {
           />
         )}
 
-        <SwiperSlider isHalf={!!order?.flower1 && order.mode === EOrderMode.Duo} hidden={!!order?.flower2}>
+        <SwiperSlider
+          refSwiper={refSwiper}
+          isHalf={!!order?.flower1 && order.mode === EOrderMode.Duo}
+          hidden={!!order?.flower2}
+          index={indexDuoElement}
+        >
           {getFlowers(order).map((item) => (
             <FlowerCard
               flower={item}

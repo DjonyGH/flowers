@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styles from './flowerCard.module.css'
 import { ESign, IFlower } from '../../types'
 import { Counter } from '../Counter'
@@ -11,7 +11,7 @@ interface IFlowerCardProps {
   orderCount: number
   onClick: () => void
   onChangePrice: (sign: ESign) => void
-  onSelectDuo: () => void
+  onSelectDuo: (index: number) => void
 }
 
 export const FlowerCard: React.FC<IFlowerCardProps> = ({
@@ -24,8 +24,9 @@ export const FlowerCard: React.FC<IFlowerCardProps> = ({
   onSelectDuo,
 }) => {
   const [vector, setVector] = useState<'up' | 'down'>()
+  const refCard = useRef<HTMLDivElement | null>(null)
   return (
-    <div className={styles.card}>
+    <div className={styles.card} ref={refCard}>
       <div className={styles.additional}>{flower.additional && <span>{flower.additional}</span>}</div>
       <div className={`${styles.body} ${isActive && styles.isActive}`}>
         <div className={styles.img} onClick={onClick}>
@@ -58,7 +59,13 @@ export const FlowerCard: React.FC<IFlowerCardProps> = ({
               }}
             />
             <div className={styles.canAdd}>можно дополнить</div>
-            <button className={styles.duo} onClick={onSelectDuo}>
+            <button
+              className={styles.duo}
+              onClick={() => {
+                const index = refCard.current?.parentElement?.getAttribute('tabindex')
+                index && onSelectDuo(+index)
+              }}
+            >
               сделать DUO
             </button>
           </>

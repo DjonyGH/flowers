@@ -7,19 +7,20 @@ interface ISliderProps {
   children?: ReactNode
   isHalf?: boolean
   hidden?: boolean
+  refSwiper: React.MutableRefObject<SwiperRef | null>
+  index?: number
 }
 
-export const SwiperSlider: React.FC<ISliderProps> = ({ children, isHalf, hidden }) => {
+export const SwiperSlider: React.FC<ISliderProps> = ({ children, isHalf, hidden, refSwiper, index = 0 }) => {
   const refWrapperSlider = useRef<HTMLDivElement | null>(null)
-  const refSwiper = useRef<SwiperRef | null>(null)
   const [width, setWidth] = useState<number>(0)
 
   useLayoutEffect(() => {
     setWidth(refWrapperSlider.current?.clientWidth || 0)
     setTimeout(function () {
-      refSwiper.current?.swiper.slideTo(0)
+      refSwiper.current?.swiper.slideTo(index)
     }, 0)
-  }, [])
+  }, [hidden]) //eslint-disable-line
 
   return (
     <div className={`${styles.wrapperSlider} ${hidden && styles.dnone}`} ref={refWrapperSlider}>
@@ -32,8 +33,6 @@ export const SwiperSlider: React.FC<ISliderProps> = ({ children, isHalf, hidden 
           }
         }}
         ref={refSwiper}
-        init={false}
-        initialSlide={0}
       >
         {React.Children.toArray(children).map((item, idx) => (
           <SwiperSlide tabIndex={idx} key={idx}>
